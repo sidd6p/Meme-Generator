@@ -1,4 +1,5 @@
-import React from "react"
+import React from 'react';
+
 import memeData from "../data"
 
 
@@ -10,6 +11,16 @@ export default function Meme() {
     });
     const [allMemes, setAllMemes] = React.useState(memeData);
 
+    function setText(event) {
+        const {name, type, value, checked} = event.target
+        setMeme(prevMeme => {
+            return {
+                ...prevMeme,
+                [name]: value
+            }
+        })
+    }
+
     function getMeme() {
         setMeme(prevMeme => {
             const menewMemes = allMemes.data.memes;
@@ -19,7 +30,7 @@ export default function Meme() {
                 memeImg: newMemeImg
             }
         })
-        console.log(meme);
+        // console.log(meme);
     }
 
     return (
@@ -29,11 +40,17 @@ export default function Meme() {
                     type="text"
                     placeholder="Top text"
                     className="form--input"
+                    name="topText"
+                    value={meme.topText}
+                    onChange={setText}
                 />
                 <input 
                     type="text"
                     placeholder="Bottom text"
                     className="form--input"
+                    name="bottomText"
+                    value={meme.bottomText}
+                    onChange={setText}
                 />
                 <button 
                     onClick={getMeme}
@@ -42,11 +59,19 @@ export default function Meme() {
                     Get a new meme image
                 </button>
             </div>
-            <img 
-                src={meme.memeImg}
-                alt="Meme"
-                className="meme--image"
-            />
+            <div className="meme">
+                <img 
+                    src={meme.memeImg}
+                    alt="Meme"
+                    className="meme--image"
+                />    
+                <div className='meme--text top'>
+                    {meme.topText}
+                </div> 
+                <div className='meme--text bottom'>
+                    {meme.bottomText}
+                </div> 
+            </div>
         </main>
     )
 }
