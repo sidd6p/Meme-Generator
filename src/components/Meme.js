@@ -3,10 +3,14 @@ import React from 'react';
 export default function Meme() {
 
     React.useEffect(() => {
-        console.log("use effect")
+        // console.log("use effect")
         fetch("https://api.imgflip.com/get_memes")
             .then(data => data.json())
             .then(data => setAllMemes(data))
+
+        return () => {
+            // console.log("No cleaning up function");
+        }
     }, [])
 
     const [meme, setMeme] = React.useState({
