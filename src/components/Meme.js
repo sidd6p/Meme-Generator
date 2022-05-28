@@ -1,18 +1,23 @@
 import React from 'react';
 
-import memeData from "../data"
-
-
 export default function Meme() {
+
+    React.useEffect(() => {
+        console.log("use effect")
+        fetch("https://api.imgflip.com/get_memes")
+            .then(data => data.json())
+            .then(data => setAllMemes(data))
+    }, [])
+
     const [meme, setMeme] = React.useState({
         topText: "",
         bottomText: "",
         memeImg: "http://i.imgflip.com/1bij.jpg"
     });
-    const [allMemes, setAllMemes] = React.useState(memeData);
+    const [allMemes, setAllMemes] = React.useState();
 
     function setText(event) {
-        const {name, type, value, checked} = event.target
+        const {name, value} = event.target
         setMeme(prevMeme => {
             return {
                 ...prevMeme,
